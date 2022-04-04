@@ -3,11 +3,13 @@ using dansketest.webapi.bs.Sort;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +29,10 @@ namespace dansketest.webapi.Controllers
         }
 
         [HttpGet("GetLastSortResult")]
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized)]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+
         public IActionResult Get()
         {
             try
@@ -35,7 +41,7 @@ namespace dansketest.webapi.Controllers
             }
             catch (FileNotFoundException fnf)
             {
-                return BadRequest(fnf.Message);
+                return Problem(fnf.Message);
             }
             catch (UnauthorizedAccessException uae)
             {
@@ -48,6 +54,10 @@ namespace dansketest.webapi.Controllers
         }
 
         [HttpPost("Sort")]
+        [SwaggerResponse((int)HttpStatusCode.OK)]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest)]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized)]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         public IActionResult Sort([FromBody] string input)
         {
             StringBuilder sb = new StringBuilder();

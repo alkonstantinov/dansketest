@@ -22,19 +22,15 @@ namespace dansketest.webapi.bs.Sort
             var arr = GetNumbers(input);
 
 
-            for (int firstIter = 0; firstIter <= arr.Length - 2; firstIter++)
-            {
-                //intArray.Length - 2
-                for (int secondIter = 0; secondIter <= arr.Length - 2; secondIter++)
-                {
-                    if (arr[secondIter] > arr[secondIter + 1])
+            for (int i = 0; i < arr.Length - 1; i++)
+                for (int j = 0; j < arr.Length - i - 1; j++)
+                    if (arr[j] > arr[j + 1])
                     {
-                        int temp = arr[secondIter + 1];
-                        arr[secondIter + 1] = arr[secondIter];
-                        arr[secondIter] = temp;
+                        // swap temp and arr[i]
+                        int temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
                     }
-                }
-            }
 
             return arr;
         }
